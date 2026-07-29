@@ -8,4 +8,5 @@ dependencies = [
     "pandas>=3.0.5",
     "st-gsheets-connection>=0.1.0",
     "streamlit>=1.60.0",
+    "tzdata>=2026.3",
 ]

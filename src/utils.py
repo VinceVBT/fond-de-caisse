@@ -1,7 +1,8 @@
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import pandas as pd
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
-from datetime import datetime
 
 
 CAISSIERS = ["Vincent", "Valérie", "Pamela", "Sylvain"]
@@ -39,7 +40,7 @@ def select_infos():
     with col2:
         boutique = st.selectbox("Nom de la boutique :", BOUTIQUES_FUND.keys())
     with col3:
-        selected_date = st.date_input("Date :", value=datetime.today())
+        selected_date = st.date_input("Date :", value=datetime.now(ZoneInfo("Europe/Paris")))
     return caissier, boutique, selected_date
 
 
@@ -66,7 +67,7 @@ def save_counting(
     df_current = CONN_SHEETS.read(ttl=0)
     new_data = {
         "Date": selected_date.strftime("%d/%m/%Y"),
-        "Dernière modification": datetime.today().strftime("%d/%m/%Y %H:%M:%S"),
+        "Dernière modification": datetime.now(ZoneInfo("Europe/Paris")).strftime("%d/%m/%Y %H:%M:%S"),
         "Boutique": boutique,
         "Caissier": caissier,
         "Total Compté": round(total, 2),
