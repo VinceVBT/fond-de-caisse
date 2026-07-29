@@ -65,11 +65,11 @@ def save_counting(
     df_current = CONN_SHEETS.read(ttl=0)
     new_data = {
         "Date": selected_date.strftime("%d/%m/%Y"),
-        "Heure": datetime.today(),
+        "Dernière modification": datetime.today().strftime("%d/%m/%Y %H:%M:%S"),
         "Boutique": boutique,
         "Caissier": caissier,
-        "Total compté": round(total, 2),
-        "Fond cible": round(target_fund, 2),
+        "Total Compté": round(total, 2),
+        "Fond Cible": round(target_fund, 2),
         "Écart / Solde": round(diff, 2),
         "Total Billets": round(total_bills, 2),
         "Total Rouleaux": round(total_rolls, 2),
