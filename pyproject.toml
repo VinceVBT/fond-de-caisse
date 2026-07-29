@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "pandas>=3.0.5",
+    "pandas-stubs~=3.0.5",
     "st-gsheets-connection>=0.1.0",
     "streamlit>=1.60.0",
     "tzdata>=2026.3",
