@@ -329,6 +329,7 @@ dependencies = [
     { name = "pandas" },
     { name = "st-gsheets-connection" },
     { name = "streamlit" },
+    { name = "tzdata" },
 ]
 
 [package.metadata]
@@ -336,6 +337,7 @@ requires-dist = [
     { name = "pandas", specifier = ">=3.0.5" },
     { name = "st-gsheets-connection", specifier = ">=0.1.0" },
     { name = "streamlit", specifier = ">=1.60.0" },
+    { name = "tzdata", specifier = ">=2026.3" },
 ]
 
 [[package]]
