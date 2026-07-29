@@ -55,7 +55,7 @@ with tab3:
             caisse_session_state_keys.append(ss_key)
 
 total_bills = sum(value * count for value, count in bills_count.items())
-total_rolls = sum(value * count for value, count in rolls_count.items())
+total_rolls = sum(COINS_ROLLS[value] * count for value, count in rolls_count.items())
 total_coins = sum(value * count for value, count in coins_count.items())
 total = total_bills + total_rolls + total_coins
 target_fund = BOUTIQUES_FUND[boutique]
