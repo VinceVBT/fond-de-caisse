@@ -60,9 +60,11 @@ def save_counting(
         total: float | int,
         diff: float | int,
 ):
+    if caissier is None:
+        raise ValueError("caissier non sélectionné")
     df_current = CONN_SHEETS.read(ttl=0)
     new_data = {
-        "Date": selected_date.date(),
+        "Date": selected_date.strftime("%d/%m/%Y"),
         "Heure": datetime.today(),
         "Boutique": boutique,
         "Caissier": caissier,
@@ -74,4 +76,4 @@ def save_counting(
         "Total Pièces": round(total_coins, 2),
     }
     df_maj = pd.concat([df_current, pd.DataFrame([new_data])], ignore_index=True)
-    #CONN_SHEETS.update(data=df_maj)
+    CONN_SHEETS.update(data=df_maj)
