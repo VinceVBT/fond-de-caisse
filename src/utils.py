@@ -59,6 +59,7 @@ def save_counting(
         total_coins: float | int,
         total: float | int,
         diff: float | int,
+        detailed_counts: dict,
 ):
     if caissier is None:
         raise ValueError("caissier non sélectionné")
@@ -74,6 +75,7 @@ def save_counting(
         "Total Billets": round(total_bills, 2),
         "Total Rouleaux": round(total_rolls, 2),
         "Total Pièces": round(total_coins, 2),
+        **detailed_counts,
     }
     df_maj = pd.concat([df_current, pd.DataFrame([new_data])], ignore_index=True)
     CONN_SHEETS.update(data=df_maj)

@@ -54,9 +54,18 @@ with tab3:
             )
             caisse_session_state_keys.append(ss_key)
 
-total_bills = sum(value * count for value, count in bills_count.items())
-total_rolls = sum(COINS_ROLLS[value] * count for value, count in rolls_count.items())
-total_coins = sum(value * count for value, count in coins_count.items())
+total_bills, total_rolls, total_coins = 0, 0, 0
+detailed_counts = {}
+for value, count in bills_count.items():
+    total_bills += value * count
+    detailed_counts[f"b_{value}"] = count
+for value, count in rolls_count.items():
+    total_bills += COINS_ROLLS[value] * count
+    detailed_counts[f"r_{value}"] = count
+for value, count in coins_count.items():
+    total_bills += value * count
+    detailed_counts[f"p_{value}"] = count
+
 total = total_bills + total_rolls + total_coins
 target_fund = BOUTIQUES_FUND[boutique]
 diff = total - target_fund
@@ -88,6 +97,7 @@ save_params = {
     "total_coins": total_coins,
     "total": total,
     "diff": diff,
+    "detailed_counts": detailed_counts,
 }
 
 if st.button("Enregistrer le comptage", type="primary", use_container_width=True):
