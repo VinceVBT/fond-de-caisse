@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 from utils import select_infos, reset_session_states
 from utils.stocks import (
