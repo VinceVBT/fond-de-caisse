@@ -8,6 +8,8 @@ BOUTIQUES_FUND = {
     "Cordeliers": 106.70,
     "Foch": 100,
 }
+DATE_FMT = "%d/%m/%Y"
+DATETIME_FMT = "%d/%m/%Y %H:%M:%S"
 
 
 def select_infos():
