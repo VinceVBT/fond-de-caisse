@@ -7,49 +7,29 @@ from . import reset_session_states, DATE_FMT
 
 CONN_STOCKS = st.connection("stocks", type=GSheetsConnection)
 STOCK_TYPES = ["Physique", "TooGoodToGo"]
-PRODUCTS = {
-    "pâtissières": [
-        "chocolat",
-        "caramel",
-        "framboise",
-        "vanille",
-        "pistache",
-        "citron",
-        "cerise",
-        "noisette",
-        "passion",
-    ],
-    "coques": [
-        "lait",
-        "noir",
-    ],
-    "partager": [
-        "citron",
-        "abricot",
-        "pistache",
-        "tiramisu",
-        "paris brest",
-    ],
-    "mini": [
-        "chocolat",
-        "pralines",
-        "nature",
-        "mix",
-    ],
-    "salées": [
-        "tomate",
-        "chèvre miel",
-        "chorizo",
-    ],
-}
+
+
+class ProductReferences:
+    def __init__(self):
+        self.refs = {}
+        self.load_product_refs()
+
+    def load_product_refs(self):
+        self.refs = {
+            cat: dict(zip(group["ARTICLE"], group["STATUT"] == "actif"))
+            for cat, group in CONN_STOCKS.read(ttl=0, worksheet="Références").groupby("FAMILLE PRODUIT")
+        }
+
+
+PRODUCTS = ProductReferences()
 
 
 def display_input_products():
     product_counts = {}
     session_state_keys = []
     for tab, (cat, product_list) in zip(
-        st.tabs(list(map(str.capitalize, PRODUCTS.keys()))),
-        PRODUCTS.items(),
+        st.tabs(list(map(str.capitalize, PRODUCTS.refs.keys()))),
+        PRODUCTS.refs.items(),
     ):
         with tab:
             for col, prefix in zip(st.columns(len(STOCK_TYPES)), STOCK_TYPES):
@@ -57,16 +37,17 @@ def display_input_products():
                     _, center, _ = st.columns([1,3,1])
                     with center:
                         st.subheader(prefix)
-                    for product in product_list:
-                        col1, col2= st.columns(2)
-                        with col1:
-                            st.write(f"{product.capitalize()}")
-                        with col2:
-                            ss_key = f"{prefix}.{cat}.{product}"
-                            product_counts[ss_key] = st.number_input(
-                                "label", min_value=0, value=0, step=1, key=ss_key, label_visibility="collapsed",
-                            )
-                            session_state_keys.append(ss_key)
+                    for product, status in product_list.items():
+                        if status:
+                            col1, col2 = st.columns(2)
+                            with col1:
+                                st.write(f"{product.capitalize()}")
+                            with col2:
+                                ss_key = f"{prefix}.{cat}.{product}"
+                                product_counts[ss_key] = st.number_input(
+                                    "label", min_value=0, value=0, step=1, key=ss_key, label_visibility="collapsed",
+                                )
+                                session_state_keys.append(ss_key)
     return product_counts, session_state_keys
 
 

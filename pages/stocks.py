@@ -1,7 +1,7 @@
 import streamlit as st
 from utils import select_infos, reset_session_states
 from utils.stocks import (
-    display_input_products, format_counts_table, save_to_gsheet,
+    display_input_products, format_counts_table, save_to_gsheet, PRODUCTS,
 )
 
 
@@ -14,11 +14,19 @@ st.divider()
 st.subheader(f"🖊️ Saisie des stocks")
 
 product_counts, stocks_session_state_keys = display_input_products()
-st.button(
-    "Réinitialiser",
-    on_click=lambda: reset_session_states(stocks_session_state_keys),
-    use_container_width=True,
-)
+reset_col, reload_col = st.columns(2)
+with reset_col:
+    st.button(
+        "Réinitialiser",
+        on_click=lambda: reset_session_states(stocks_session_state_keys),
+        use_container_width=True,
+    )
+with reload_col:
+    st.button(
+        "Recharger les références",
+        on_click=lambda: PRODUCTS.load_product_refs(),
+        use_container_width=True,
+    )
 
 df = format_counts_table(product_counts).reset_index(drop=True).pivot_table(
     index=["CATÉGORIE", "PRODUIT"],
