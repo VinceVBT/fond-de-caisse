@@ -3,7 +3,7 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
-from . import reset_session_states
+from . import reset_session_states, DATE_FMT, DATETIME_FMT
 
 
 BILLS_LIST = [100, 50, 20, 10, 5]
@@ -70,8 +70,8 @@ def save_counting(
         raise ValueError("caissier non sélectionné")
     df_current = CONN_CAISSE.read(ttl=0)
     new_data = {
-        "Date": selected_date.strftime("%d/%m/%Y"),
-        "Dernière modification": datetime.now(ZoneInfo("Europe/Paris")).strftime("%d/%m/%Y %H:%M:%S"),
+        "Date": selected_date.strftime(DATE_FMT),
+        "Dernière modification": datetime.now(ZoneInfo("Europe/Paris")).strftime(DATETIME_FMT),
         "Boutique": boutique,
         "Caissier": caissier,
         "Total Compté": round(total, 2),
