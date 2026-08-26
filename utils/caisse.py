@@ -14,6 +14,7 @@ COINS_ROLLS = {
     0.2: 8,
     0.1: 4,
 }
+MAX_DIFF = 1.6
 CONN_CAISSE = st.connection("caisse", type=GSheetsConnection)
 
 MD_CENTERED_RECAP = """
@@ -68,6 +69,8 @@ def save_counting(
 ):
     if caissier is None:
         raise ValueError("caissier non sélectionné")
+    if diff >= MAX_DIFF:
+        raise ValueError(f"écart de caisse trop élevé (>= {MAX_DIFF}€)")
     df_current = CONN_CAISSE.read(ttl=0)
     new_data = {
         "Date": selected_date.strftime(DATE_FMT),
