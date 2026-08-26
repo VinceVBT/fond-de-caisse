@@ -63,10 +63,10 @@ with col1:
         total_bills += value * count
         detailed_counts[f"b_{value}"] = count
     for value, count in rolls_count.items():
-        total_bills += COINS_ROLLS[value] * count
+        total_rolls += COINS_ROLLS[value] * count
         detailed_counts[f"r_{value}"] = count
     for value, count in coins_count.items():
-        total_bills += value * count
+        total_coins += value * count
         detailed_counts[f"p_{value}"] = count
 
     total = total_bills + total_rolls + total_coins
