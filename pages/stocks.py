@@ -1,4 +1,3 @@
-import pandas as pd
 import streamlit as st
 from utils import select_infos, reset_session_states
 from utils.stocks import (
@@ -49,7 +48,7 @@ df = df.sort_values(by="CATÉGORIE", key=lambda x: x.str.len(), ascending=False)
 
 st.button(
     "Enregistrer les stocks",
-    on_click=lambda: save_to_gsheet(df, date=selected_date, caissier=caissier, boutique=boutique, ss_keys=stocks_session_state_keys),
+    on_click=lambda: save_to_gsheet(df, date=selected_date, caissier=caissier, boutique=boutique),
     type="primary",
     use_container_width=True,
 )

@@ -18,14 +18,24 @@ def select_infos():
     with col1:
         caissier = st.selectbox(
             "Nom du caissier :",
-            options=[None] + CAISSIERS,
-            format_func=lambda x: "Sélectionner une option..." if x is None else x,
+            options=CAISSIERS,
+            index=None,
+            placeholder="Sélectionner une option...",
+            key="select.caissier"
         )
     with col2:
-        boutique = st.selectbox("Nom de la boutique :", BOUTIQUES_FUND.keys())
+        boutique = st.selectbox(
+            "Nom de la boutique :",
+            options=BOUTIQUES_FUND.keys(),
+            key="select.boutique"
+        )
     with col3:
         selected_date = st.date_input("Date :", value=datetime.now(ZoneInfo("Europe/Paris")))
     return caissier, boutique, selected_date
+
+
+def reset_selected_infos():
+    st.session_state["select.caissier"] = None
 
 
 def reset_session_states(ss_keys: list):
