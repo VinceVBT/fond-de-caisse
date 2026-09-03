@@ -2,7 +2,7 @@ import streamlit as st
 from utils import BOUTIQUES_FUND, select_infos, reset_session_states
 from utils.caisse import (
     BILLS_LIST, COINS_ROLLS, MD_CENTERED_RECAP,
-    fmt_coin, save_and_reset_session_state,
+    fmt_coin, save_to_gsheet,
 )
 
 
@@ -101,7 +101,7 @@ with col2:
 
     st.button(
         "Enregistrer le comptage",
-        on_click=lambda: save_and_reset_session_state(save_params=save_params, ss_keys=caisse_session_state_keys),
+        on_click=lambda: save_to_gsheet(save_params=save_params),
         type="primary",
         use_container_width=True,
     )
