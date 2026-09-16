@@ -3,7 +3,10 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
-from . import reset_selected_infos, DATE_FMT, DATETIME_FMT
+from . import (
+    reset_selected_infos, show_error, show_sucess,
+    DATE_FMT, DATETIME_FMT,
+)
 
 
 BILLS_LIST = [100, 50, 20, 10, 5]
@@ -93,8 +96,7 @@ def save_to_gsheet(save_params: dict):
     try:
         save_counting(**save_params)
     except Exception as err:
-        st.session_state["saving_status"] = "error"
-        st.session_state["saving_error"] = err
+        show_error(message=err)
     else:
-        st.session_state["saving_status"] = "success"
+        show_sucess()
     reset_selected_infos()

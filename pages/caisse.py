@@ -105,9 +105,3 @@ with col2:
         type="primary",
         use_container_width=True,
     )
-if st.session_state.get("saving_status") == "error":
-    st.error(f"Erreur pendant la sauvegarde : {st.session_state.get("saving_error")}")
-elif st.session_state.get("saving_status") == "success":
-    st.success(f"✅ Comptage enregistré avec succès dans Google Sheets !")
-else:
-    pass
