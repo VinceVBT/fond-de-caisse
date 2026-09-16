@@ -42,3 +42,13 @@ def reset_session_states(ss_keys: list):
     for ss_key in ss_keys:
         if ss_key in st.session_state.keys():
             st.session_state[ss_key] = 0
+
+
+@st.dialog("❌ Erreur")
+def show_error(message: str):
+    st.error(f"Erreur pendant la sauvegarde: {str(message)}")
+
+
+@st.dialog("✅ Succès")
+def show_sucess():
+    st.success("Enregistré avec succès dans Google Sheets !")

@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime
 from streamlit_gsheets import GSheetsConnection
-from . import reset_selected_infos, DATE_FMT
+from . import reset_selected_infos, show_sucess, show_error, DATE_FMT
 
 
 CONN_STOCKS = st.connection("stocks", type=GSheetsConnection)
@@ -83,8 +83,7 @@ def save_to_gsheet(
         df = df[["Caissier", "Date"] + cols]
         CONN_STOCKS.update(data=df, worksheet=boutique)
     except Exception as err:
-        st.session_state["saving_status"] = "error"
-        st.session_state["saving_error"] = err
+        show_error(message=err)
     else:
-        st.session_state["saving_status"] = "success"
+        show_sucess()
     reset_selected_infos()
